@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Dashboard</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
+        .card h3 { margin-top: 0; }
+        .card a { text-decoration: none; color: #0366d6; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>My SPAs</h1>
+    <div id="dashboard" class="grid">Loading projects...</div>
+
+    <script>
+        const username = 'josephararil';
+        const dashboard = document.getElementById('dashboard');
+
+        async function fetchRepos() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated`);
+                const repos = await response.json();
+                
+                // Filter out the root dashboard repo itself, forks, or repos without pages if desired
+                const spaRepos = repos.filter(repo => repo.name !== `${username}.github.io` && !repo.fork);
+
+                if(spaRepos.length === 0) {
+                    dashboard.innerHTML = '<p>No projects found.</p>';
+                    return;
+                }
+
+                dashboard.innerHTML = spaRepos.map(repo => `
+                    <div class="card">
+                        <h3>${repo.name}</h3>
+                        <p>${repo.description || 'No description provided.'}</p>
+                        <a href="https://${username}.github.io/${repo.name}/" target="_blank">Launch App →</a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                dashboard.innerHTML = '<p>Error loading repositories.</p>';
+            }
+        }
+
+        fetchRepos();
+    </script>
+</body>
+</html>
