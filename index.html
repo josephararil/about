@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Joseph Harari — projects & experiments" />
-  <title>Joseph Harari — Projects</title>
+  <meta name="description" content="Joseph Harari — Technology Program Manager. Portfolio, experience, and side projects." />
+  <title>Joseph Harari</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,6 +68,7 @@
 
     /* ---------- Reset / base ---------- */
     *,*::before,*::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     html, body { margin: 0; padding: 0; }
     body {
       font-family: var(--font-sans);
@@ -90,18 +91,60 @@
     input { font: inherit; color: inherit; }
     ::selection { background: var(--accent); color: var(--bg); }
 
+    /* ---------- Sticky nav ---------- */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,10,0.86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transform: translateY(-100%);
+      transition: transform .3s var(--ease), background-color .25s var(--ease), border-color .25s var(--ease);
+    }
+    html[data-theme="light"] .site-nav { background: rgba(250,250,250,0.9); }
+    .site-nav.is-visible { transform: translateY(0); }
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .nav-inner { padding: 0 24px; } }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      margin-right: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      margin-right: 20px;
+    }
+    @media (max-width: 580px) { .nav-links { display: none; } }
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      transition: color .15s var(--ease);
+    }
+    .nav-link:hover { color: var(--text); }
+
     /* ---------- Layout shell ---------- */
     .shell {
       max-width: 1400px;
       margin: 0 auto;
       padding: 32px 28px 96px;
     }
-    @media (min-width: 768px) {
-      .shell { padding: 48px 40px 120px; }
-    }
-    @media (min-width: 1600px) {
-      .shell { max-width: 1640px; padding: 56px 64px 160px; }
-    }
+    @media (min-width: 768px) { .shell { padding: 48px 40px 120px; } }
+    @media (min-width: 1600px) { .shell { max-width: 1640px; padding: 56px 64px 160px; } }
 
     /* ---------- Top bar ---------- */
     .topbar {
@@ -142,21 +185,20 @@
     }
     .icon-btn svg { width: 16px; height: 16px; }
 
-    /* ---------- Header / hero ---------- */
+    /* ---------- Hero ---------- */
     .hero {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 32px;
-      margin-bottom: 56px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid var(--border);
+      gap: 28px;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
     @media (min-width: 720px) {
-      .hero { grid-template-columns: auto 1fr auto; gap: 28px; align-items: end; }
+      .hero { grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
     }
 
     .avatar {
-      width: 72px; height: 72px;
+      width: 84px; height: 84px;
       border-radius: 50%;
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -169,24 +211,55 @@
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--font-mono);
-      font-size: 24px;
+      font-size: 22px;
       color: var(--text-muted);
     }
 
-    .hero-text .eyebrow {
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
       font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+      color: #3ecf8e;
+      background: rgba(62,207,142,0.08);
+      border: 1px solid rgba(62,207,142,0.2);
+      padding: 4px 10px;
+      border-radius: 999px;
     }
+    .status-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #3ecf8e;
+      box-shadow: 0 0 0 2px rgba(62,207,142,0.25);
+      flex-shrink: 0;
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(62,207,142,0.25); }
+      50%       { box-shadow: 0 0 0 4px rgba(62,207,142,0.1); }
+    }
+    .location-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--text-faint);
+    }
+
     .hero-text h1 {
-      margin: 0 0 10px;
-      font-size: clamp(32px, 4.5vw, 52px);
+      margin: 0 0 14px;
+      font-size: clamp(28px, 4vw, 50px);
       font-weight: 500;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
+      letter-spacing: -0.026em;
+      line-height: 1.07;
     }
     .hero-text h1 .accent {
       font-family: var(--font-serif);
@@ -194,34 +267,407 @@
       font-weight: 400;
       color: var(--text-muted);
     }
-    .hero-text p {
-      margin: 0;
+    .hero-text > p {
+      margin: 0 0 24px;
       color: var(--text-muted);
-      max-width: 52ch;
+      max-width: 58ch;
       font-size: 15px;
+      line-height: 1.68;
     }
+    .inline-link {
+      color: var(--text);
+      border-bottom: 1px solid var(--border-strong);
+      transition: border-color .15s var(--ease);
+    }
+    .inline-link:hover { border-color: var(--text); }
 
     .hero-links {
       display: flex;
       gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
     }
     .ghost-link {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; align-items: center; gap: 7px;
       padding: 8px 14px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
       background: var(--surface);
-      color: var(--text);
+      color: var(--text-muted);
       font-size: 13px;
       transition: all .15s var(--ease);
+      white-space: nowrap;
     }
     .ghost-link:hover {
       border-color: var(--border-strong);
       background: var(--surface-2);
+      color: var(--text);
       transform: translateY(-1px);
     }
-    .ghost-link svg { width: 14px; height: 14px; }
+    .ghost-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .ghost-link-sm { padding: 6px 11px; font-size: 12px; }
+
+    /* ---------- CV Sections ---------- */
+    .cv-section {
+      padding: 64px 0;
+      border-top: 1px solid var(--border);
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 2.8vw, 34px);
+      font-weight: 500;
+      letter-spacing: -0.022em;
+      margin: 0 0 36px;
+      line-height: 1.1;
+    }
+    .section-title .accent {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .section-intro {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 60ch;
+      margin: -24px 0 32px;
+      line-height: 1.65;
+    }
+
+    /* ---------- About ---------- */
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (min-width: 760px) {
+      .about-body { grid-template-columns: 1fr 256px; gap: 56px; }
+    }
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0 0 18px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .stat-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .stat-item:last-child { border-bottom: 0; }
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    /* ---------- Experience ---------- */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      transition: border-color .2s var(--ease);
+    }
+    .exp-card:hover { border-color: var(--border-strong); }
+    .exp-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .co-badge {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+      border: 1px solid transparent;
+    }
+    .exp-meta { flex: 1; min-width: 0; }
+    .exp-company {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .exp-role-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+    .exp-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      padding-top: 3px;
+      flex-shrink: 0;
+    }
+    .exp-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.62;
+      margin: 0 0 12px;
+    }
+    .exp-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .exp-bullets li {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.57;
+    }
+    .exp-bullets li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--text-faint);
+    }
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    /* Early career progression row */
+    .progression-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .prog-step {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .prog-step .prog-date { opacity: 0.55; font-size: 10px; }
+    .prog-arrow {
+      color: var(--text-faint);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Education ---------- */
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .edu-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .edu-badge {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--text-faint);
+      flex-shrink: 0;
+    }
+    .edu-info { flex: 1; min-width: 0; }
+    .edu-degree {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .edu-school {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-top: 2px;
+      letter-spacing: 0.02em;
+    }
+    .edu-year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    /* ---------- Skills ---------- */
+    .skills-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 32px;
+    }
+    .skill-cat { display: flex; flex-direction: column; gap: 10px; }
+    .skill-cat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      letter-spacing: 0.01em;
+      transition: all .15s var(--ease);
+    }
+    .skill-chip:hover {
+      color: var(--text);
+      border-color: var(--border-strong);
+      background: var(--surface-2);
+    }
+
+    /* ---------- Testimonials ---------- */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 22px;
+      position: relative;
+      transition: border-color .2s var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .testimonial-card:hover { border-color: var(--border-strong); }
+    .testimonial-mark {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 56px;
+      line-height: 0.8;
+      color: var(--border-strong);
+      margin-bottom: 14px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .testimonial-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15.5px;
+      line-height: 1.68;
+      color: var(--text-muted);
+      flex: 1;
+      margin-bottom: 22px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+    }
+    .author-initials {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .author-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+      letter-spacing: 0.03em;
+      margin-top: 2px;
+    }
 
     /* ---------- Toolbar (search + filters) ---------- */
     .toolbar {
@@ -294,11 +740,7 @@
       border-color: var(--accent);
     }
     .chip .lang-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-    .chip .count {
-      font-size: 10px;
-      opacity: 0.6;
-      font-variant-numeric: tabular-nums;
-    }
+    .chip .count { font-size: 10px; opacity: 0.6; font-variant-numeric: tabular-nums; }
 
     .meta-row {
       display: flex;
@@ -319,10 +761,7 @@
       transition: all .15s var(--ease);
     }
     .view-toggle button:hover { color: var(--text); }
-    .view-toggle button[aria-pressed="true"] {
-      background: var(--surface-2);
-      color: var(--text);
-    }
+    .view-toggle button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); }
     .view-toggle button svg { width: 14px; height: 14px; display: block; }
     .view-toggle button + button { border-left: 1px solid var(--border); }
 
@@ -332,9 +771,7 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 14px;
     }
-    .grid.list {
-      grid-template-columns: 1fr;
-    }
+    .grid.list { grid-template-columns: 1fr; }
     .grid.list .card { padding: 18px 24px; }
     .grid.list .card .desc { -webkit-line-clamp: 1; line-clamp: 1; min-height: 0; }
 
@@ -361,10 +798,7 @@
       pointer-events: none;
       z-index: -1;
     }
-    .card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-2px);
-    }
+    .card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
     .card:hover::before { opacity: 1; }
 
     .card-head {
@@ -383,7 +817,6 @@
       word-break: break-word;
     }
     .card .name .ns { color: var(--text-faint); font-weight: 400; }
-
     .card .visibility {
       font-family: var(--font-mono);
       font-size: 10px;
@@ -395,7 +828,6 @@
       border-radius: 999px;
       flex-shrink: 0;
     }
-
     .card .desc {
       color: var(--text-muted);
       font-size: 13.5px;
@@ -423,10 +855,7 @@
       flex-wrap: wrap;
     }
     .card-meta .item { display: inline-flex; align-items: center; gap: 6px; }
-    .card-meta .lang-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--text-faint);
-    }
+    .card-meta .lang-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint); }
     .card-meta svg { width: 12px; height: 12px; }
     .card-meta time { font-variant-numeric: tabular-nums; }
 
@@ -447,15 +876,13 @@
     .card:hover .launch svg { transform: translate(2px, -2px); }
     .launch:hover { opacity: 0.9; }
 
-    .card-link-overlay {
-      position: absolute; inset: 0; z-index: 1;
-    }
+    .card-link-overlay { position: absolute; inset: 0; z-index: 1; }
     .card-foot, .launch { position: relative; z-index: 2; }
 
     /* ---------- Skeleton ---------- */
     @keyframes shimmer {
       0%   { background-position: -400px 0; }
-      100% { background-position: 400px 0; }
+      100% { background-position:  400px 0; }
     }
     .skel {
       background: linear-gradient(90deg, var(--skeleton-a) 0%, var(--skeleton-b) 50%, var(--skeleton-a) 100%);
@@ -524,13 +951,32 @@
   </style>
 </head>
 <body>
+
+  <!-- ─── Sticky nav ─────────────────────────────────────────── -->
+  <nav class="site-nav" id="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <span class="nav-brand">josephararil.github.io</span>
+      <div class="nav-links">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#experience">Experience</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#testimonials">Testimonials</a>
+        <a class="nav-link" href="#projects">Projects</a>
+      </div>
+      <a class="ghost-link ghost-link-sm" href="https://www.linkedin.com/in/joseph-harari-a8197a10b/" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </nav>
+
   <main class="shell">
 
     <!-- ─── Top bar ─────────────────────────────────────────── -->
     <div class="topbar">
       <div class="brand">
         <span class="dot" aria-hidden="true"></span>
-        <span>josephararil / dashboard</span>
+        <span>josephararil / portfolio</span>
       </div>
       <div class="topbar-actions">
         <a class="icon-btn" href="https://github.com/josephararil" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
@@ -549,53 +995,356 @@
     </div>
 
     <!-- ─── Hero ────────────────────────────────────────────── -->
-    <header class="hero">
+    <header class="hero" id="top">
       <div class="avatar" id="avatar">
-        <div class="fallback" aria-hidden="true">jA</div>
+        <div class="fallback" aria-hidden="true">JH</div>
       </div>
       <div class="hero-text">
-        <div class="eyebrow">Index ·  Personal Projects</div>
-        <h1>Joseph Harari — <span class="accent">builds &amp; experiments</span></h1>
-        <p>A live index of single-page applications and prototypes deployed under <code style="font-family:var(--font-mono);font-size:13px;color:var(--text)">josephararil.github.io</code>. Each card launches the live build.</p>
-      </div>
-      <div class="hero-links">
-        <a class="ghost-link" href="https://github.com/josephararil" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.6.23 2.78.11 3.07.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.13v3.16c0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
-          Profile
-        </a>
+        <div class="hero-meta">
+          <span class="status-pill">
+            <span class="dot" aria-hidden="true"></span>
+            Open to the right role
+          </span>
+          <span class="location-tag">Plovdiv, Bulgaria</span>
+        </div>
+        <h1>Joseph Harari — <span class="accent">technology program manager</span></h1>
+        <p>I bridge the gap between technical teams, business stakeholders, and end-users to deliver high-quality fintech products. Currently SVP of Technology Program Management at <a class="inline-link" href="https://tradu.com" target="_blank" rel="noopener noreferrer">FXCM&nbsp;/ Tradu</a>, overseeing all trading front-ends, APIs, and middleware.</p>
+        <div class="hero-links">
+          <a class="ghost-link" href="https://www.linkedin.com/in/joseph-harari-a8197a10b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a class="ghost-link" href="https://github.com/josephararil" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.6.23 2.78.11 3.07.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.06.78 2.13v3.16c0 .31.21.68.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a class="ghost-link" href="mailto:josephararil@gmail.com" aria-label="Send email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Email
+          </a>
+          <!-- Replace href with your CV PDF URL -->
+          <a class="ghost-link" href="#" aria-label="Download CV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
+        </div>
       </div>
     </header>
 
-    <!-- ─── Toolbar ─────────────────────────────────────────── -->
-    <div class="toolbar">
-      <div class="search">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
-        </svg>
-        <input id="search" type="search" placeholder="Search projects by name or description…" autocomplete="off" spellcheck="false" />
-        <kbd>⌘K</kbd>
+    <!-- ─── About ────────────────────────────────────────────── -->
+    <section class="cv-section" id="about" aria-labelledby="about-title">
+      <div class="section-eyebrow">01 / About</div>
+      <h2 class="section-title" id="about-title">Bridging the gap between <span class="accent">technology &amp; business</span></h2>
+      <div class="about-body">
+        <div class="about-text">
+          <p>I'm a Technology Program Manager with a background in multi-asset trading, fintech integrations, and authentication workflows. I thrive in complex environments where technology meets finance — translating ambiguous business goals into structured technical programs that actually ship.</p>
+          <p>I've spent the last nine years at FXCM and Tradu, growing from a client-facing financial services representative to SVP of Technology Program Management. Along the way I've led support teams across three continents, spearheaded the Bulgarian hub from scratch, and eventually crossed into the development organisation to oversee the trading platforms used by hundreds of thousands of traders worldwide.</p>
+          <p>I maintain a genuine interest in the technical side of what I manage. Outside of work I build side projects and experiments — you'll find them below. Staying close to the code makes me a better PM.</p>
+        </div>
+        <div class="about-stats" aria-label="Quick facts">
+          <div class="stat-item">
+            <span class="stat-value">9+</span>
+            <span class="stat-label">Years at FXCM / Tradu</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">~30</span>
+            <span class="stat-label">Major initiatives / year</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">$300B+</span>
+            <span class="stat-label">Monthly trading volume</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">3</span>
+            <span class="stat-label">Continents managed</span>
+          </div>
+        </div>
       </div>
-      <div class="filters" id="filters" role="tablist" aria-label="Filter projects"></div>
-    </div>
+    </section>
 
-    <div class="meta-row">
-      <span class="count" id="count">— projects</span>
-      <div class="view-toggle" role="group" aria-label="View mode">
-        <button id="view-grid" aria-pressed="true" aria-label="Grid view">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        </button>
-        <button id="view-list" aria-pressed="false" aria-label="List view">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
+    <!-- ─── Experience ───────────────────────────────────────── -->
+    <section class="cv-section" id="experience" aria-labelledby="exp-title">
+      <div class="section-eyebrow">02 / Experience</div>
+      <h2 class="section-title" id="exp-title">Nine years at <span class="accent">FXCM &amp; Tradu</span></h2>
+
+      <div class="exp-list">
+
+        <!-- SVP -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="co-badge" style="background:rgba(62,207,142,0.1);color:#3ecf8e;border-color:rgba(62,207,142,0.2)">F</div>
+            <div class="exp-meta">
+              <div class="exp-company">FXCM / Tradu</div>
+              <div class="exp-role-title">Senior Vice President of Technology Program Management</div>
+            </div>
+            <div class="exp-date">May 2025 — Present</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Direct the design, roadmap, development, testing, and deployment of all FXCM and Tradu trading front-ends, APIs, and middleware microservices</li>
+            <li>Lead a team of program managers delivering ~30 major tech initiatives annually, in line with regulatory and best-practice standards</li>
+            <li>Drove on-time delivery of the front-end, API, and TradingView workstreams for the Spreadbetting launch — contributing to ~30% uplift in UK client acquisition and ~45% increase in average deposit size</li>
+            <li>Serve as primary technical liaison for critical third-party partners including TradingView, DevExperts, Adaptive Consulting, GTN, and MetaQuotes</li>
+          </ul>
+          <div class="tech-tags">
+            <span class="tech-tag">Program Management</span>
+            <span class="tech-tag">Roadmapping</span>
+            <span class="tech-tag">TradingView</span>
+            <span class="tech-tag">FIX API</span>
+            <span class="tech-tag">Vendor Management</span>
+          </div>
+        </div>
+
+        <!-- Software Dev PM -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="co-badge" style="background:rgba(49,120,198,0.1);color:#3178c6;border-color:rgba(49,120,198,0.2)">F</div>
+            <div class="exp-meta">
+              <div class="exp-company">FXCM / Tradu</div>
+              <div class="exp-role-title">Software Development Program Manager</div>
+            </div>
+            <div class="exp-date">May 2021 — May 2025</div>
+          </div>
+          <p class="exp-desc">Moved into the Development Department after demonstrating a combination of strong managerial skills and the ability to learn rapidly in technical environments.</p>
+          <ul class="exp-bullets">
+            <li>Co-managed the CFD roadmap and development lifecycle for the company's core trading platforms and FIX API, supporting over $300B in monthly Retail and Institutional trading volume</li>
+            <li>Led the "Listed Stocks" initiative — a $2M+ budget project introducing a new asset class and entire new tech stack, opening new marketing channels that increased client acquisition</li>
+            <li>Led the "10k" initiative, increasing instruments offered to clients by ~92% by implementing overlapping market data streaming mechanisms across all trading front-ends</li>
+            <li>Established and scaled standardised Agile/Kanban methodologies that increased development predictability and team throughput by ~20%</li>
+          </ul>
+          <div class="tech-tags">
+            <span class="tech-tag">Agile</span>
+            <span class="tech-tag">Kanban</span>
+            <span class="tech-tag">CFDs</span>
+            <span class="tech-tag">Market Data</span>
+            <span class="tech-tag">FIX API</span>
+            <span class="tech-tag">Multi-asset</span>
+          </div>
+        </div>
+
+        <!-- AVP -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="co-badge" style="background:rgba(168,85,247,0.1);color:#a855f7;border-color:rgba(168,85,247,0.2)">F</div>
+            <div class="exp-meta">
+              <div class="exp-company">FXCM / Tradu</div>
+              <div class="exp-role-title">Assistant Vice President</div>
+            </div>
+            <div class="exp-date">Mar 2019 — May 2021</div>
+          </div>
+          <p class="exp-desc">Led client operations and established the company's new Bulgarian hub, managing teams across three countries.</p>
+          <ul class="exp-bullets">
+            <li>Spearheaded the establishment of the new Bulgarian hub — full ownership of recruitment, operational launch, and integration into the global organisation</li>
+            <li>Managed and mentored a globally distributed team of 12 professionals across Bulgaria, Israel, and South Africa</li>
+            <li>Implemented new CRM and sales processes that reduced average wait times by ~95% (chat) and ~65% (calls/emails) through incentive alignment and metric analytics</li>
+            <li>Awarded <em>Best Customer Service 2021</em> by Ultimate Fintech in recognition of exceptional team performance</li>
+          </ul>
+          <div class="tech-tags">
+            <span class="tech-tag">Team Management</span>
+            <span class="tech-tag">CRM</span>
+            <span class="tech-tag">Hiring</span>
+            <span class="tech-tag">Operations</span>
+            <span class="tech-tag">Client Services</span>
+          </div>
+        </div>
+
+        <!-- Early career -->
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="co-badge" style="background:rgba(234,179,8,0.1);color:#b89408;border-color:rgba(234,179,8,0.2)">F</div>
+            <div class="exp-meta">
+              <div class="exp-company">FXCM / Tradu</div>
+              <div class="exp-role-title">Early Career — Customer-facing to Management</div>
+            </div>
+            <div class="exp-date">Sep 2016 — Mar 2019</div>
+          </div>
+          <div class="progression-row" aria-label="Role progression">
+            <span class="prog-step">Financial Services Rep <span class="prog-date">Sep '16</span></span>
+            <span class="prog-arrow" aria-hidden="true">→</span>
+            <span class="prog-step">Active Trader Rep <span class="prog-date">Mar '17</span></span>
+            <span class="prog-arrow" aria-hidden="true">→</span>
+            <span class="prog-step">Team Captain <span class="prog-date">Nov '17</span></span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Consistently exceeded quantitative and qualitative metrics, earning promotion to the Active Trader Group — a specialist team handling High Net Worth clients</li>
+            <li>Became point of contact for HNW clients, advising on everything from technical platform questions to complex market analysis and algorithmic trading</li>
+            <li>Selected for management after taking a proactive role in the team; led quality reviews, hiring, and internal projects including rebuilding the onboarding programme for interns and new hires company-wide</li>
+          </ul>
+        </div>
+
       </div>
-    </div>
 
-    <!-- ─── Grid ────────────────────────────────────────────── -->
-    <section id="dashboard" class="grid" aria-live="polite"></section>
+      <!-- Education -->
+      <div class="edu-list">
+        <div class="edu-card">
+          <div class="edu-badge" aria-hidden="true">∑</div>
+          <div class="edu-info">
+            <div class="edu-degree">BSc Mathematics &amp; Physics</div>
+            <div class="edu-school">The Open University</div>
+          </div>
+          <div class="edu-year">2014 — 2018</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-badge" aria-hidden="true">§</div>
+          <div class="edu-info">
+            <div class="edu-degree">RG146 Licence — Financial Derivatives</div>
+            <div class="edu-school">Mentor Education</div>
+          </div>
+          <div class="edu-year">2019</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-badge" aria-hidden="true">Fr</div>
+          <div class="edu-info">
+            <div class="edu-degree">Diploma in French — B2 Level</div>
+            <div class="edu-school">France Langue</div>
+          </div>
+          <div class="edu-year">2015</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-badge" aria-hidden="true">✈</div>
+          <div class="edu-info">
+            <div class="edu-degree">Aeronautical Search &amp; Rescue · Crew Chief &amp; Management</div>
+            <div class="edu-school">Israeli Air Force Academy</div>
+          </div>
+          <div class="edu-year">2012 — 2013</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── Skills ───────────────────────────────────────────── -->
+    <section class="cv-section" id="skills" aria-labelledby="skills-title">
+      <div class="section-eyebrow">03 / Skills</div>
+      <h2 class="section-title" id="skills-title">What I <span class="accent">bring to the table</span></h2>
+
+      <div class="skills-body">
+        <div class="skill-cat">
+          <div class="skill-cat-label">Program Management</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Agile</span>
+            <span class="skill-chip">Kanban</span>
+            <span class="skill-chip">Scrum</span>
+            <span class="skill-chip">OKRs</span>
+            <span class="skill-chip">Roadmapping</span>
+            <span class="skill-chip">Risk Management</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-label">Trading &amp; Fintech</div>
+          <div class="skill-chips">
+            <span class="skill-chip">FIX API</span>
+            <span class="skill-chip">CFDs</span>
+            <span class="skill-chip">Multi-asset</span>
+            <span class="skill-chip">Market Data</span>
+            <span class="skill-chip">Execution Platforms</span>
+            <span class="skill-chip">Spreadbetting</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-label">Partnerships</div>
+          <div class="skill-chips">
+            <span class="skill-chip">TradingView</span>
+            <span class="skill-chip">DevExperts</span>
+            <span class="skill-chip">MetaQuotes</span>
+            <span class="skill-chip">GTN</span>
+            <span class="skill-chip">Adaptive</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-label">Leadership</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Stakeholder Mgmt</span>
+            <span class="skill-chip">Cross-functional Teams</span>
+            <span class="skill-chip">Hiring</span>
+            <span class="skill-chip">Mentoring</span>
+            <span class="skill-chip">P&amp;L</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Testimonials ─────────────────────────────────────── -->
+    <!-- Replace the placeholder quotes below with real testimonials -->
+    <section class="cv-section" id="testimonials" aria-labelledby="testimonials-title">
+      <div class="section-eyebrow">04 / Testimonials</div>
+      <h2 class="section-title" id="testimonials-title">What <span class="accent">people say</span></h2>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="testimonial-mark" aria-hidden="true">"</div>
+          <p class="testimonial-text">Replace this with a real quote from a colleague, manager, or partner. Something that speaks to how you work, what you deliver, or the impact you've had on a team or product.</p>
+          <div class="testimonial-author">
+            <div class="author-initials" aria-hidden="true">—</div>
+            <div>
+              <div class="author-name">Name Surname</div>
+              <div class="author-title">Title · Company</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-mark" aria-hidden="true">"</div>
+          <p class="testimonial-text">Replace this with a real quote from a colleague, manager, or partner. Something that speaks to how you work, what you deliver, or the impact you've had on a team or product.</p>
+          <div class="testimonial-author">
+            <div class="author-initials" aria-hidden="true">—</div>
+            <div>
+              <div class="author-name">Name Surname</div>
+              <div class="author-title">Title · Company</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-mark" aria-hidden="true">"</div>
+          <p class="testimonial-text">Replace this with a real quote from a colleague, manager, or partner. Something that speaks to how you work, what you deliver, or the impact you've had on a team or product.</p>
+          <div class="testimonial-author">
+            <div class="author-initials" aria-hidden="true">—</div>
+            <div>
+              <div class="author-name">Name Surname</div>
+              <div class="author-title">Title · Company</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── Projects ─────────────────────────────────────────── -->
+    <section class="cv-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-eyebrow">05 / Side Projects</div>
+      <h2 class="section-title" id="projects-title">Technical <span class="accent">experiments</span></h2>
+      <p class="section-intro">Personal projects and open-source experiments. Program management is my day job — building things keeps me close to the engineering work I oversee.</p>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input id="search" type="search" placeholder="Search projects by name or description…" autocomplete="off" spellcheck="false" />
+          <kbd>⌘K</kbd>
+        </div>
+        <div class="filters" id="filters" role="tablist" aria-label="Filter projects"></div>
+      </div>
+
+      <div class="meta-row">
+        <span class="count" id="count">— projects</span>
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button id="view-grid" aria-pressed="true" aria-label="Grid view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
+          <button id="view-list" aria-pressed="false" aria-label="List view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <section id="dashboard" class="grid" aria-live="polite"></section>
+
+    </section>
 
     <!-- ─── Footer ──────────────────────────────────────────── -->
     <footer class="footer">
-      <span>© <span id="year"></span> · Built with vanilla JS · No tracking</span>
+      <span>© <span id="year"></span> Joseph Harari · Built with vanilla JS · No tracking</span>
       <span>
         <a href="https://docs.github.com/en/rest" target="_blank" rel="noopener noreferrer">GitHub REST</a>
         ·
@@ -610,7 +1359,6 @@
     const API = `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`;
     const USER_API = `https://api.github.com/users/${USERNAME}`;
 
-    /* GitHub-style language colors (truncated to common set) */
     const LANG_COLOR = {
       JavaScript: '#f1e05a', TypeScript: '#3178c6', Python: '#3572A5',
       HTML: '#e34c26', CSS: '#563d7c', SCSS: '#c6538c', Vue: '#41b883',
@@ -639,7 +1387,7 @@
 
     /* ───────────────────────── State ────────────────────────── */
     let allRepos = [];
-    let currentFilter = 'all';   // 'all' | 'recent' | language string
+    let currentFilter = 'all';
     let currentQuery = '';
 
     /* ───────────────────────── Theme ────────────────────────── */
@@ -814,7 +1562,6 @@
 
       dashboard.innerHTML = list.map(cardHTML).join('');
 
-      /* mouse-tracked spotlight on cards */
       dashboard.querySelectorAll('.card').forEach(card => {
         card.addEventListener('pointermove', (e) => {
           const r = card.getBoundingClientRect();
@@ -833,7 +1580,7 @@
         if (u.avatar_url) {
           avatarEl.innerHTML = `<img src="${esc(u.avatar_url)}" alt="${esc(u.login)}" />`;
         }
-      } catch (e) { /* avatar is non-critical */ }
+      } catch (e) {}
     };
 
     /* ───────────────────────── Fetch ────────────────────────── */
@@ -878,7 +1625,6 @@
       searchT = setTimeout(render, 80);
     });
 
-    /* ⌘K / Ctrl+K to focus search */
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -892,6 +1638,15 @@
         searchInput.blur();
       }
     });
+
+    /* ───────────────────────── Sticky nav ───────────────────── */
+    const siteNav = document.getElementById('site-nav');
+    const heroEl  = document.getElementById('top');
+    const navObserver = new IntersectionObserver(
+      ([entry]) => siteNav.classList.toggle('is-visible', !entry.isIntersecting),
+      { threshold: 0, rootMargin: '-80px 0px 0px 0px' }
+    );
+    navObserver.observe(heroEl);
 
     /* ───────────────────────── Boot ─────────────────────────── */
     loadUser();
